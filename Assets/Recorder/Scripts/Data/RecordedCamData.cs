@@ -1,12 +1,14 @@
+using System;
 using UnityEngine;
 
 namespace Recorder.Scripts.Data
 {
+    [Serializable]
     public class RecordedCamData
     {
-        public Vector3 rPosition;
-        public float yAxis;
-        public float xAxis;
+        [SerializeField] public Vector3 rPosition;
+        [SerializeField] public float yAxis;
+        [SerializeField] public float xAxis;
 
         public RecordedCamData(Vector3 pos, float yValue, float xValue)
         {

@@ -6,6 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Recorder/Scenes/RecorderScene.unity
+    path: Assets/Recorder/Scenes/RecordScene.unity
     guid: e91a33592a46a7441b9d5233d62b71a2
+  - enabled: 1
+    path: Assets/Recorder/Scenes/LoadingScene.unity
+    guid: 45a73efef56148540bb8051af5a21fac
+  - enabled: 1
+    path: Assets/Recorder/Scenes/ReplayScene.unity
+    guid: 1c880b5930766d1419294ad4a9d23b8e
   m_configObjects: {}
