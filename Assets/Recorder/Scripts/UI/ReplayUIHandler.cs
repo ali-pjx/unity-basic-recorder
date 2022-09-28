@@ -2,6 +2,7 @@ using System;
 using DG.Tweening;
 using Recorder.Scripts.Gameplay;
 using Recorder.Scripts.Service.Observer;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,13 +16,20 @@ namespace Recorder.Scripts.UI
         [SerializeField] private Button _autoReplayBtn;
         [SerializeField] private Button _keyboardReplayBtn;
         [SerializeField] private Button _stopReplayBtn;
-
+        [SerializeField] private TextMeshProUGUI _recName;
+        [SerializeField] private Slider _progressSlider;
+        
         private bool _showHelp;
         private ObserverSystem _observer;
 
         private void Awake()
         {
             _observer = FindObjectOfType<ObserverSystem>();
+        }
+
+        private void Start()
+        {
+            _recName.text = GameManager.Instance.SelectedRecordData.recName;
         }
 
         private void OnEnable()
@@ -31,6 +39,8 @@ namespace Recorder.Scripts.UI
             _autoReplayBtn.onClick.AddListener(AutoReplay);
             _keyboardReplayBtn.onClick.AddListener(KeyboardReplay);
             _stopReplayBtn.onClick.AddListener(StopReplay);
+            
+            _observer.ListenToEvent<float>(EObserver.REPLAY_SLIDER_VALUE, OnSetSliderValue);
         }
 
         private void OnDisable()
@@ -40,6 +50,8 @@ namespace Recorder.Scripts.UI
             _autoReplayBtn.onClick.RemoveAllListeners();
             _keyboardReplayBtn.onClick.RemoveAllListeners();
             _stopReplayBtn.onClick.RemoveAllListeners();
+            
+            _observer.RemoveEventListener<float>(EObserver.REPLAY_SLIDER_VALUE, OnSetSliderValue);
         }
 
         private void ShowHelpBox()
@@ -51,7 +63,7 @@ namespace Recorder.Scripts.UI
                 return;
             }
 
-            _helpBox.DOMoveX(-500, .5f);
+            _helpBox.DOMoveX(-400, .5f);
         }
 
         private void ExitToRecordScene()
@@ -72,6 +84,11 @@ namespace Recorder.Scripts.UI
         private void StopReplay()
         {
             _observer.BroadcastEvent(EObserver.REPLAY_STOP);
+        }
+
+        private void OnSetSliderValue(float value)
+        {
+            _progressSlider.value = value;
         }
     }
 }

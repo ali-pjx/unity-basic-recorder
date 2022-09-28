@@ -10,9 +10,9 @@ namespace Recorder.Scripts.Gameplay
     public class ReplayController : MonoBehaviour
     {
         [SerializeField] private CinemachineFreeLook _cineCam;
-        [SerializeField] private float _currentReplayIndex;
-        [SerializeField] private float _indexChangeRate;
-
+        
+        private float _currentReplayIndex;
+        private float _indexChangeRate;
         private bool _isPlaying;
         private bool _autoReplay;
         private List<RecordedCamData> _recordedData = new();
@@ -88,9 +88,6 @@ namespace Recorder.Scripts.Gameplay
             _isPlaying = !_isPlaying;
             if (_isPlaying)
             {
-                _cineCam.m_XAxis.m_MaxSpeed = 0;
-                _cineCam.m_YAxis.m_MaxSpeed = 0;
-                Debug.Log(_cineCam.m_YAxis.m_MaxSpeed + " " + _cineCam.m_XAxis.m_MaxSpeed);
                 SetCinemachineAxis(0);
             }
         }
@@ -104,6 +101,9 @@ namespace Recorder.Scripts.Gameplay
             _cineCam.m_XAxis.Value = targetRecordedCamData.xAxis;
 
             transform.position = targetRecordedCamData.rPosition;
+
+            var progress = _currentReplayIndex / _recordedData.Count;
+            _observer.BroadcastEvent(EObserver.REPLAY_SLIDER_VALUE, progress);
         }
 
         private void OnAutoReplay()

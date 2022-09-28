@@ -9,7 +9,8 @@ namespace Recorder.Scripts.Service.Observer
         // Replay
         REPLAY_AUTO,
         REPLAY_KEYBOARD,
-        REPLAY_STOP
+        REPLAY_STOP,
+        REPLAY_SLIDER_VALUE
     }
 
     public class ObserverSystem : MonoBehaviour
